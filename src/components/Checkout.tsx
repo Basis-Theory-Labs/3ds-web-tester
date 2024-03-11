@@ -44,24 +44,24 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
     setInProgress(true);
 
     // create token
-    await createToken();
+    const token = await createToken();
     setActiveStep(1);
 
     // create 3ds session
-    await create3dsSession();
+    const session = await create3dsSession(token);
     setActiveStep(2);
 
     // authenticate session (backend)
-    await authenticate3dsSession();
+    const authentication = await authenticate3dsSession(session);
 
     // check if challenge required
     if (authentication.authentication_status === "challenge") {
       setActiveStep(3);
 
-      await performChallenge();
+      await performChallenge(authentication, session);
       setActiveStep(4);
 
-      await getChallengeResult();
+      await getChallengeResult(session);
     }
 
     setInProgress(false);
@@ -86,21 +86,23 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
     if (!token) throw new Error("Token creation failed");
 
     setToken(token);
+    return token;
   };
 
-  const create3dsSession = async () => {
+  const create3dsSession = async (token: any) => {
     if (token) {
       const session = await bt3ds.createSession({ pan: token.id });
 
       if (!session) throw new Error("3DS session creation failed");
 
       setSession(session);
+      return session;
     } else {
       throw new Error("Token was not set. Cannot create 3DS session.");
     }
   };
 
-  const authenticate3dsSession = async () => {
+  const authenticate3dsSession = async (session: any) => {
     const authResponse = await fetch("/api/authenticate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -112,9 +114,10 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
     if (!authentication) throw new Error("3DS session authentication failed");
 
     setAuthentication(authentication);
+    return authentication;
   };
 
-  const performChallenge = async () => {
+  const performChallenge = async (authentication: any, session: any) => {
     const challenge = {
       acsChallengeUrl: authentication.acs_challenge_url,
       acsTransactionId: authentication.acs_transaction_id,
@@ -136,7 +139,7 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
     setChallengeComplete(true);
   };
 
-  const getChallengeResult = async () => {
+  const getChallengeResult = async (session: any) => {
     const challengeResultResponse = await fetch(
       `/api/challenge-result?sessionId=${session.id}`,
       {
