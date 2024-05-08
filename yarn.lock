@@ -57,10 +57,10 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
-"@basis-theory/3ds-web@1.0.0-beta.12":
-  version "1.0.0-beta.12"
-  resolved "https://registry.yarnpkg.com/@basis-theory/3ds-web/-/3ds-web-1.0.0-beta.12.tgz#10e904a984c8860f40464e65fe1f977968aa9996"
-  integrity sha512-EWbd0gUv9QRJEyv6eCKOr9WnDm55aIgyaIlv2Ot9iRV4D71AgRFtPzcMCascB+Txh5sxRa3ApXoiKaAxkHQfmA==
+"@basis-theory/3ds-web@1.1.9":
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/@basis-theory/3ds-web/-/3ds-web-1.1.9.tgz#5e676681850b4f45d6b6e97153d95337b03fbded"
+  integrity sha512-vIdxC0Hij8A4grQvSxAIxtzY0Lvk4t9DpFtIE4ivIb6cnR0OWbz/Wl98OS6cTrsS7VbSO8omV7n/r2XFS6gxVQ==
 
 "@basis-theory/basis-theory-js@^4.1.0":
   version "4.1.0"
