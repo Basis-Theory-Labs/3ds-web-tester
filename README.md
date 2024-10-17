@@ -6,7 +6,7 @@ This repository is a simple Next.js project meant to test the Basis Theory 3DS F
 
 1. Set up the `.env.local`
     ```bash
-    cp .env.local.example .env.local
+    cp .env.example .env.local
     ```
 2. Install dependencies
     ```bash
