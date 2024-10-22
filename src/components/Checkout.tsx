@@ -3,9 +3,10 @@
 import { CardElement, useBasisTheory } from "@basis-theory/basis-theory-react";
 import { Token } from "@basis-theory/basis-theory-js/types/models";
 import { useRef, useState } from "react";
-import { Box, Button, Paper } from "@mui/material";
+import { Alert, Box, Button, Paper, Snackbar } from "@mui/material";
 import { CardMenu } from "./CardMenu";
 import { CheckoutSteps } from "./CheckoutSteps";
+import { CardElement as CardElementT } from "@basis-theory/basis-theory-react/types";
 
 interface CheckoutProps {
   bt3ds: any;
@@ -13,7 +14,7 @@ interface CheckoutProps {
 
 export const Checkout = ({ bt3ds }: CheckoutProps) => {
   const { bt } = useBasisTheory();
-  const cardRef = useRef(null);
+  const cardRef = useRef<CardElementT>(null);
 
   const [activeStep, setActiveStep] = useState(0);
   const [inProgress, setInProgress] = useState(false);
@@ -27,9 +28,12 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
   const [challengeComplete, setChallengeComplete] = useState(false);
   const [challengeResult, setChallengeResult] = useState<any>();
 
+  const [errorMsg, setErrorMsg] = useState("");
+  const [displayError, setDisplayError] = useState(false);
+
   const setTestCard = async () => {
     clearCheckout();
-  
+
     setCardValue({
       number: testNumber,
       expiration_month: 12,
@@ -39,32 +43,40 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
   };
 
   const checkout = async () => {
-    // reset steps
-    clearCheckout();
-    setInProgress(true);
+    try {
+      // reset steps
+      clearCheckout();
+      setInProgress(true);
 
-    // create token
-    const token = await createToken();
-    setActiveStep(1);
+      // create token
+      const token = await createToken();
+      setActiveStep(1);
 
-    // create 3ds session
-    const session = await create3dsSession(token);
-    setActiveStep(2);
+      // create 3ds session
+      const session = await create3dsSession(token);
+      setActiveStep(2);
 
-    // authenticate session (backend)
-    const authentication = await authenticate3dsSession(session);
+      // authenticate session (backend)
+      const authentication = await authenticate3dsSession(session);
 
-    // check if challenge required
-    if (authentication.authentication_status === "challenge") {
-      setActiveStep(3);
+      // check if challenge required
+      if (authentication.authentication_status === "challenge") {
+        setActiveStep(3);
 
-      await performChallenge(authentication, session);
-      setActiveStep(4);
+        await performChallenge(authentication, session);
+        setActiveStep(4);
 
-      await getChallengeResult(session);
+        await getChallengeResult(session);
+      }
+
+      setInProgress(false);
+    } catch (e) {
+      clearCheckout();
+      cardRef.current?.clear();
+      setInProgress(false);
+
+      handleError(e);
     }
-
-    setInProgress(false);
   };
 
   const clearCheckout = async () => {
@@ -154,6 +166,16 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
     setChallengeResult(challengeResult);
   };
 
+  const handleError = (error: any) => {
+    console.log(error);
+
+    if(error instanceof Error) setErrorMsg(error.message);
+    else if (typeof error === "string") setErrorMsg(error);
+    else setErrorMsg("An error occurred. Check console for more details");
+
+    setDisplayError(true);
+  };
+
   return (
     <Box sx={{ width: "600px" }}>
       <Box mb={2} width={"100%"}>
@@ -204,6 +226,22 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
           </Box>
         </Paper>
       </Box>
+
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={displayError}
+        autoHideDuration={6000}
+        onClose={() => setDisplayError(false)}
+      >
+        <Alert
+          onClose={() => setDisplayError(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {errorMsg}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
