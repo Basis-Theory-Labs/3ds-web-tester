@@ -4,7 +4,7 @@ This repository is a simple Next.js project meant to test the Basis Theory 3DS F
 
 ## Getting Started
 
-1. Set up the `.env.local`
+1. Set up the `.env.local` - replace the `PVT_API_KEY` and `NEXT_PUBLIC_PUB_API_KEY` with your own values.
     ```bash
     cp .env.example .env.local
     ```
@@ -29,8 +29,8 @@ To reset, just select a new card and click `Checkout` again.
 
 ## Test Cards
 
-All [Ravelin Test Cards](https://developer.ravelin.com/guides/3d-secure/test-cards/#3ds-2-test-cards) are available via the dropdown.
-If you wish to add more, edit the `src/data/test-cards.json` file. 
+All [Test Cards](https://developers.basistheory.com/docs/api/3ds/sessions#test-cards) are available in the `src/data/test-cards.json` file.
+The dropdown by default is populated with the `luhnValid` cards.
 
 ## More Information
 - [Basis Theory 3DS Setup Guide](https://developers.basistheory.com/docs/guides/threeds/overview)
