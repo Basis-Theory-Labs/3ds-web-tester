@@ -1,12 +1,11 @@
 "use client";
 
-import { CardElement, useBasisTheory } from "@basis-theory/basis-theory-react";
-import { Token } from "@basis-theory/basis-theory-js/types/models";
+import testCards from "../data/test-cards.json";
 import { useRef, useState } from "react";
 import { Alert, Box, Button, Paper, Snackbar } from "@mui/material";
+import { CardElement, ICardElement, useBasisTheory } from "@basis-theory/react-elements";
 import { CardMenu } from "./CardMenu";
 import { CheckoutSteps } from "./CheckoutSteps";
-import { CardElement as CardElementT } from "@basis-theory/basis-theory-react/types";
 
 interface CheckoutProps {
   bt3ds: any;
@@ -14,15 +13,15 @@ interface CheckoutProps {
 
 export const Checkout = ({ bt3ds }: CheckoutProps) => {
   const { bt } = useBasisTheory();
-  const cardRef = useRef<CardElementT>(null);
+  const cardRef = useRef<ICardElement>(null);
 
   const [activeStep, setActiveStep] = useState(0);
   const [inProgress, setInProgress] = useState(false);
 
-  const [testNumber, setTestNumber] = useState("4200000000000002");
+  const [testNumber, setTestNumber] = useState(testCards.luhnValid[0].cardNumber);
   const [cardValue, setCardValue] = useState({});
 
-  const [token, setToken] = useState<Token>();
+  const [token, setToken] = useState<any>();
   const [session, setSession] = useState<any>();
   const [authentication, setAuthentication] = useState<any>();
   const [challengeComplete, setChallengeComplete] = useState(false);
@@ -37,8 +36,8 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
     setCardValue({
       number: testNumber,
       expiration_month: 12,
-      expiration_year: 2024,
-      cvc: "123",
+      expiration_year: 2030,
+      cvc: "1234",  // non-4-digit CVCs will be just cut off
     });
   };
 
@@ -59,7 +58,6 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
       // authenticate session (backend)
       const authentication = await authenticate3dsSession(session);
 
-      // check if challenge required
       if (authentication.authentication_status === "challenge") {
         setActiveStep(3);
 
@@ -103,7 +101,7 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
 
   const create3dsSession = async (token: any) => {
     if (token) {
-      const session = await bt3ds.createSession({ pan: token.id });
+      const session = await bt3ds.createSession({ tokenId: token.id });
 
       if (!session) throw new Error("3DS session creation failed");
 
@@ -169,7 +167,7 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
   const handleError = (error: any) => {
     console.log(error);
 
-    if(error instanceof Error) setErrorMsg(error.message);
+    if (error instanceof Error) setErrorMsg(error.message);
     else if (typeof error === "string") setErrorMsg(error);
     else setErrorMsg("An error occurred. Check console for more details");
 

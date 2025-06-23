@@ -7,6 +7,7 @@ export async function POST(req: NextRequest) {
     sessionId,
     authentication_category: "payment",
     authentication_type: "payment-transaction",
+    challenge_preference: "no-challenge",
     purchase_info: {
       amount: "80000",
       currency: "826",
@@ -14,9 +15,8 @@ export async function POST(req: NextRequest) {
       date: "20240109141010",
     },
     requestor_info: {
-      id: "example-3ds-merchant",
-      name: "Example 3DS Merchant",
-      url: "https://www.ravelin.com/example-merchant",
+      amex_requestor_type: "MER",
+      cb_siret_number: "12412412412"
     },
     merchant_info: {
       mid: "9876543210001",
@@ -24,10 +24,23 @@ export async function POST(req: NextRequest) {
       name: "Example 3DS Merchant",
       category_code: "7922",
       country_code: "826",
+      url: 'https://basistheory.com',
     },
     cardholder_info: {
       name: "Basis Theory",
       email: "engineering@basistheory.com",
+      billing_address: {
+        country_code: "840",
+        state_code: "CA",
+        line1: "203 Flamingo Rd",
+        line2: "Suite 350",
+      },
+      shipping_address: {
+        country_code: "840",
+        state_code: "CA",
+        line1: "203 Flamingo Rd",
+        line2: "Suite 350",
+      }
     },
   };
 

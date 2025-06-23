@@ -31,3 +31,8 @@ To reset, just select a new card and click `Checkout` again.
 
 All [Ravelin Test Cards](https://developer.ravelin.com/guides/3d-secure/test-cards/#3ds-2-test-cards) are available via the dropdown.
 If you wish to add more, edit the `src/data/test-cards.json` file. 
+
+## More Information
+- [Basis Theory 3DS Setup Guide](https://developers.basistheory.com/docs/guides/threeds/overview)
+- [Basis Theory 3DS Web SDK Documentation](https://developers.basistheory.com/docs/sdks/web/3ds)
+- [Basis Theory 3DS API Reference](https://developers.basistheory.com/docs/api/3ds/sessions)

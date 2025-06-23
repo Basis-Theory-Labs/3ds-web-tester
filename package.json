@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@basis-theory/3ds-web": "1.3.0",
-    "@basis-theory/basis-theory-react": "^1.17.0",
+    "@basis-theory/web-threeds": "1.3.1",
+    "@basis-theory/react-elements": "^1.17.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.12",

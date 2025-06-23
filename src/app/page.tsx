@@ -1,26 +1,28 @@
 "use client";
 
-import { BasisTheoryProvider, useBasisTheory } from "@basis-theory/basis-theory-react";
-import { BasisTheory3ds } from "@basis-theory/3ds-web";
-import { Checkout } from "@/components/Checkout";
+import { useBasisTheory } from "@basis-theory/react-elements";
+import dynamic from "next/dynamic";
+
+const ClientWrapper = dynamic(
+  () => import("@/components/ClientWrapper").then(mod => mod.ClientWrapper),
+  { ssr: false }
+);
 
 export default function Home() {
   const { bt } = useBasisTheory(process.env.NEXT_PUBLIC_PUB_API_KEY, {
-    elements: true,
-    elementsClientUrl: `${process.env.NEXT_PUBLIC_JS_HOST}/elements`,
-    elementsBaseUrl: `${process.env.NEXT_PUBLIC_JS_HOST}/hosted-elements`,
-    apiBaseUrl: process.env.NEXT_PUBLIC_API_HOST,
-  });
-
-  const bt3ds = BasisTheory3ds(process.env.NEXT_PUBLIC_PUB_API_KEY ?? '', {
-    apiBaseUrl: process.env.NEXT_PUBLIC_API_HOST,
+    _devMode: process.env.NEXT_PUBLIC_DEV_MODE === "true",
   });
 
   return (
     <main>
-      <BasisTheoryProvider bt={bt}>
-        <Checkout bt3ds={bt3ds} />
-      </BasisTheoryProvider>
+      <ClientWrapper
+        bt={bt}
+        apiKey={process.env.NEXT_PUBLIC_PUB_API_KEY ?? ''}
+        config={{
+          apiBaseUrl: process.env.NEXT_PUBLIC_API_HOST,
+          sdkBaseUrl: process.env.NEXT_PUBLIC_SDK_HOST,
+        }}
+      />
     </main>
   );
 }

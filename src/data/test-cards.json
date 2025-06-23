@@ -1,66 +1,216 @@
-[
-  {
-    "cardNumber": "4200000000000002",
-    "title": "Successful Frictionless Authentication"
-  },
-  {
-    "cardNumber": "4200000000000003",
-    "title": "Authentication Attempted"
-  },
-  {
-    "cardNumber": "4200000000000005",
-    "title": "Authentication Failed"
-  },
-  {
-    "cardNumber": "4200000000000006",
-    "title": "Authentication Unavailable"
-  },
-  {
-    "cardNumber": "4200000000000007",
-    "title": "Authentication Rejected"
-  },
-  {
-    "cardNumber": "4200000000000004",
-    "title": "Successful Challenge Authentication"
-  },
-  {
-    "cardNumber": "4200000000000014",
-    "title": "Successful Challenge Authentication - Method not Required"
-  },
-  {
-    "cardNumber": "4200000000000015",
-    "title": "Successful Mandated Challenge Authentication"
-  },
-  {
-    "cardNumber": "4200000000000016",
-    "title": "Successful Out-of-Band Challenge Authentication"
-  },
-  {
-    "cardNumber": "4200000000000008",
-    "title": "Attempted Challenge Authentication"
-  },
-  {
-    "cardNumber": "4200000000000009",
-    "title": "Failed Challenge Authentication"
-  },
-  {
-    "cardNumber": "4200000000000017",
-    "title": "Failed Out of Band Challenge Authentication"
-  },
-  {
-    "cardNumber": "4200000000000010",
-    "title": "Unavailable Challenge Authentication"
-  },
-  {
-    "cardNumber": "4200000000000011",
-    "title": "Rejected Challenge Authentication"
-  },
-  {
-    "cardNumber": "4200000000000012",
-    "title": "3DS Directory Server Error"
-  },
-  {
-    "cardNumber": "4200000000000013",
-    "title": "Internal 3DS Server Error"
-  }
-]
+{
+  "luhnValid": [
+    {
+      "cardNumber": "5204247750001471",
+      "title": "Successful Frictionless Authentication",
+      "brand": "MASTERCARD"
+    },
+    {
+      "cardNumber": "6011601160116011",
+      "title": "Successful Frictionless Authentication",
+      "brand": "DISCOVER"
+    },
+    {
+      "cardNumber": "340000000004001",
+      "title": "Successful Frictionless Authentication",
+      "brand": "AMEX"
+    },
+    {
+      "cardNumber": "4000020000000000",
+      "title": "Successful Challenge Authentication",
+      "brand": "VISA"
+    },
+    {
+      "cardNumber": "370000000000002",
+      "title": "Successful Challenge Authentication",
+      "brand": "AMEX"
+    },
+    {
+      "cardNumber": "3566002020360505",
+      "title": "Successful Challenge Authentication",
+      "brand": "JCB"
+    },
+    {
+      "cardNumber": "3566006663297692",
+      "title": "Successful Challenge Authentication",
+      "brand": "JCB"
+    },
+    {
+      "cardNumber": "4005562231212123",
+      "title": "Successful Challenge Authentication - Method not Required",
+      "brand": "VISA"
+    },
+    {
+      "cardNumber": "4761369980320253",
+      "title": "Successful Mandated Challenge Authentication",
+      "brand": "VISA"
+    },
+    {
+      "cardNumber": "5200000000001104",
+      "title": "Successful Mandated Challenge Authentication",
+      "brand": "MASTERCARD"
+    },
+    {
+      "cardNumber": "4000000000000341",
+      "title": "Successful Out-of-Band Challenge Authentication",
+      "brand": "VISA"
+    },
+    {
+      "cardNumber": "4005571701111111",
+      "title": "Attempted Challenge Authentication",
+      "brand": "VISA"
+    },
+    {
+      "cardNumber": "4111111111111111",
+      "title": "Authentication Attempted",
+      "brand": "VISA"
+    },
+    {
+      "cardNumber": "5424180011113336",
+      "title": "Authentication Attempted",
+      "brand": "MASTERCARD"
+    },
+    {
+      "cardNumber": "4264281511112228",
+      "title": "Authentication Failed",
+      "brand": "VISA"
+    },
+    {
+      "cardNumber": "5424180000000171",
+      "title": "Authentication Failed",
+      "brand": "MASTERCARD"
+    },
+    {
+      "cardNumber": "5405001111111165",
+      "title": "Authentication Unavailable",
+      "brand": "MASTERCARD"
+    },
+    {
+      "cardNumber": "5405001111111116",
+      "title": "Authentication Rejected",
+      "brand": "MASTERCARD"
+    },
+    {
+      "cardNumber": "4055011111111111",
+      "title": "Failed Challenge Authentication",
+      "brand": "VISA"
+    },
+    {
+      "cardNumber": "5427660064241339",
+      "title": "Failed Challenge Authentication",
+      "brand": "MASTERCARD"
+    },
+    {
+      "cardNumber": "6011361011110004",
+      "title": "Failed Out of Band Challenge Authentication",
+      "brand": "DISCOVER"
+    },
+    {
+      "cardNumber": "6011361000008888",
+      "title": "Unavailable Challenge Authentication",
+      "brand": "DISCOVER"
+    },
+    {
+      "cardNumber": "6011361000001115",
+      "title": "Rejected Challenge Authentication",
+      "brand": "DISCOVER"
+    },
+    {
+      "cardNumber": "4264281500003339",
+      "title": "3DS Directory Server Error",
+      "brand": "VISA"
+    },
+    {
+      "cardNumber": "5424180011110001",
+      "title": "3DS Directory Server Error",
+      "brand": "MASTERCARD"
+    },
+    {
+      "cardNumber": "4264281500001119",
+      "title": "Internal 3DS Server Error",
+      "brand": "VISA"
+    }
+  ],
+  "luhnInvalid": [
+    {
+      "cardNumber": "4200000000000002",
+      "brand": "VISA",
+      "title": "Successful Frictionless Authentication"
+    },
+    {
+      "cardNumber": "4200000000000003",
+      "brand": "VISA",
+      "title": "Authentication Attempted"
+    },
+    {
+      "cardNumber": "4200000000000005",
+      "brand": "VISA",
+      "title": "Authentication Failed"
+    },
+    {
+      "cardNumber": "4200000000000006",
+      "brand": "VISA",
+      "title": "Authentication Unavailable"
+    },
+    {
+      "cardNumber": "4200000000000007",
+      "brand": "VISA",
+      "title": "Authentication Rejected"
+    },
+    {
+      "cardNumber": "4200000000000004",
+      "brand": "VISA",
+      "title": "Successful Challenge Authentication"
+    },
+    {
+      "cardNumber": "4200000000000014",
+      "brand": "VISA",
+      "title": "Successful Challenge Authentication - Method not Required"
+    },
+    {
+      "cardNumber": "4200000000000015",
+      "brand": "VISA",
+      "title": "Successful Mandated Challenge Authentication"
+    },
+    {
+      "cardNumber": "4200000000000016",
+      "brand": "VISA",
+      "title": "Successful Out-of-Band Challenge Authentication"
+    },
+    {
+      "cardNumber": "4200000000000008",
+      "brand": "VISA",
+      "title": "Attempted Challenge Authentication"
+    },
+    {
+      "cardNumber": "4200000000000009",
+      "brand": "VISA",
+      "title": "Failed Challenge Authentication"
+    },
+    {
+      "cardNumber": "4200000000000017",
+      "brand": "VISA",
+      "title": "Failed Out of Band Challenge Authentication"
+    },
+    {
+      "cardNumber": "4200000000000010",
+      "brand": "VISA",
+      "title": "Unavailable Challenge Authentication"
+    },
+    {
+      "cardNumber": "4200000000000011",
+      "brand": "VISA",
+      "title": "Rejected Challenge Authentication"
+    },
+    {
+      "cardNumber": "4200000000000012",
+      "brand": "VISA",
+      "title": "3DS Directory Server Error"
+    },
+    {
+      "cardNumber": "4200000000000013", 
+      "brand": "VISA",
+      "title": "Internal 3DS Server Error"
+    }
+  ]
+}
