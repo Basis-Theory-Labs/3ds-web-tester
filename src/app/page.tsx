@@ -10,7 +10,9 @@ const ClientWrapper = dynamic(
 
 export default function Home() {
   const { bt } = useBasisTheory(process.env.NEXT_PUBLIC_PUB_API_KEY, {
-    _devMode: process.env.NEXT_PUBLIC_DEV_MODE === "true",
+    // TODO: remove this
+    //_devMode: process.env.NEXT_PUBLIC_DEV_MODE === "true",
+    useSameOriginApi: false,
   });
 
   return (

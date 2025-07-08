@@ -77,6 +77,95 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
     }
   };
 
+  const checkoutWithRedirect = async () => {
+    try {
+      setInProgress(true);
+
+      // create token
+      const token = await createToken();
+      
+      // create 3ds session using new route
+      const sessionResponse = await fetch("/api/sessions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tokenId: token.id }),
+      });
+
+      setActiveStep(2);
+      const session = await sessionResponse.json();
+      setSession(session);
+
+      // Handle 3DS redirect
+      if (session.redirect_url) {
+        const result = await handle3dsRedirect(session.redirect_url);
+        
+        if (result === 'success') {
+          // get updated session after redirect
+          const sessionResponse = await fetch(`/api/sessions/${session.id}`);
+          const updatedSession = await sessionResponse.json();
+
+          // set authentication
+          setAuthentication(updatedSession.authentication);
+
+          // session needed a challenge
+          if (updatedSession.authentication.directory_status_code === "C") {
+            // get challenge result
+            setActiveStep(4);
+            await getChallengeResult(updatedSession);
+          }
+        }
+      }
+
+      setInProgress(false);
+    } catch (e) {
+      setInProgress(false);
+      handleError(e);
+    }
+  };
+
+  const handle3dsRedirect = async (redirectUrl: string) => {
+    return new Promise<string>((resolve, reject) => {
+      // Add the API key to the redirect URL
+      const urlWithApiKey = `${redirectUrl}${process.env.NEXT_PUBLIC_PUB_API_KEY}`;
+      
+      // Open popup window
+      const popup = window.open(
+        urlWithApiKey,
+        '3ds-redirect',
+        'width=600,height=600,scrollbars=yes,resizable=yes'
+      );
+
+      if (!popup) {
+        reject(new Error('Popup blocked. Please allow popups for this site.'));
+        return;
+      }
+
+      // Listen for messages from the popup
+      const messageListener = (event: MessageEvent) => {
+        if (event.origin !== window.location.origin) return;
+        
+        if (event.data.type === '3ds-result') {
+          console.log('3DS Result:', event.data.result);
+          window.removeEventListener('message', messageListener);
+          popup.close();
+          resolve(event.data.result);
+        }
+      };
+
+      window.addEventListener('message', messageListener);
+
+      // Check if popup is closed manually
+      const checkClosed = setInterval(() => {
+        if (popup.closed) {
+          clearInterval(checkClosed);
+          window.removeEventListener('message', messageListener);
+          console.log('3DS popup was closed');
+          resolve('closed');
+        }
+      }, 1000);
+    });
+  };
+
   const clearCheckout = async () => {
     setActiveStep(0);
     setToken(undefined);
@@ -201,11 +290,20 @@ export const Checkout = ({ bt3ds }: CheckoutProps) => {
       <Box>
         <Button
           variant="contained"
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", mb: 1 }}
           onClick={() => checkout()}
           disabled={inProgress}
         >
-          {"Checkout"}
+          {"Checkout With Iframe"}
+        </Button>
+        
+        <Button
+          variant="outlined"
+          sx={{ width: "100%" }}
+          onClick={() => checkoutWithRedirect()}
+          disabled={inProgress}
+        >
+          {"Checkout With Redirection"}
         </Button>
       </Box>
 
